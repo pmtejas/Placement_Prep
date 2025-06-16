@@ -3,50 +3,39 @@ using namespace std;
 class Node{
     public:
         int data;
-        Node* prev;
         Node* next;
+        Node* back;
         Node(int data1,Node* prev1,Node* next1){
             data=data1;
+            back=prev1;
             next=next1;
-            prev=prev1;
         }
         Node(int data1){
             data=data1;
             next=nullptr;
-            prev=nullptr;
+            back=nullptr;
         }
         Node(){
             data=0;
+            back=nullptr;
             next=nullptr;
-            prev=nullptr;
         }
 };
-Node* deleteHead(Node* head){
-    if (head==nullptr)
+Node* reverseDll(Node* head){
+    if (head==nullptr || head->next==nullptr)
     {
         return head;
     }
-    Node* temp=head;
-    head=head->next;
-    head->prev=nullptr;
-    delete temp;
-    return head;
-}
-Node* deleteTail(Node* head){
-    if (head==nullptr|| head->next==nullptr)
+    Node* prev=nullptr;
+    Node* curr=head;
+    while (curr!=nullptr)
     {
-        return nullptr;
+        prev=curr->back;
+        curr->back=curr->next;
+        curr->next=prev;
+        curr=curr->back;
     }
-    Node* temp=head;
-    while (temp->next!=nullptr)
-    {
-        temp=temp->next;
-    }
-    Node* newNode=temp->prev;
-    newNode->next=nullptr;
-    temp->prev=nullptr;
-    delete temp;
-    return head;
+    return prev->back;
 }
 void printList(Node* head) {
     Node* current = head;
@@ -66,18 +55,12 @@ void deleteList(Node* head) {
 }
 int main()
 {
-    Node* head=new Node(10);
-    Node* second=new Node(20);
-    Node* third=new Node();
-    head->next=second;
-    second->prev=head;
-    second->next=third;
-    third->prev=second;
-    third->next=nullptr;
+    // Node(int data1,Node* prev1,Node* next1) use this constructor to create a node
+    Node* head = new Node(1);
+    head->next = new Node(2, head, nullptr);
+    head->next->next = new Node(3, head->next, nullptr);
     printList(head);
-    head=deleteHead(head);
-    printList(head);
-    head=deleteTail(head);
+    head=reverseDll(head);
     printList(head);
     deleteList(head);
     return 0;
