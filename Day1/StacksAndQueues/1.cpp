@@ -1,75 +1,43 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-// implementation of stack using array
-class Stack {
+//Implentation of Stack using array
+class Stack{
+    int size;
     int top;
-    int capacity;
-    int* array;
-public:
-    Stack(int size) {
-        capacity = size;
-        top = -1;
-        array = new int[capacity];
-    }
-
-    ~Stack() {
-        delete[] array;
-    }
-
-    bool isFull() {
-        return top == capacity - 1;
-    }
-
-    bool isEmpty() {
-        return top == -1;
-    }
-
-    void push(int item) {
-        if (isFull()) {
-            cout << "Stack overflow\n";
-            return;
+    int* arr;
+    public:
+        Stack(){
+            size=100;
+            top=-1;
+            arr=new int[size];
         }
-        array[++top] = item;
-    }
-
-    int pop() {
-        if (isEmpty()) {
-            cout << "Stack underflow\n";
-            return -1; // or throw an exception
+        void push(int x){
+            top++;
+            arr[top]=x;
         }
-        return array[top--];
-    }
-
-    int peek() {
-        if (isEmpty()) {
-            cout << "Stack is empty\n";
-            return -1; // or throw an exception
+        int pop(){
+            int x=arr[top];
+            top--;
+            return x;
         }
-        return array[top];
-    }
+        int topp(){
+            return arr[top];
+        }
+        int sizee(){
+            return top+1;
+        }
+        int peek(){
+            if(top==-1) return -1; // Stack is empty
+            return arr[top];
+        }
 };
-int main()
-{
-    Stack stack(5);
-
-    stack.push(10);
-    stack.push(20);
-    stack.push(30);
-
-    cout << "Top element is: " << stack.peek() << endl;
-
-    cout << "Popped element is: " << stack.pop() << endl;
-
-    if (stack.isEmpty()) {
-        cout << "Stack is empty\n";
-    } else {
-        cout << "Stack is not empty\n";
-    }
-    stack.push(40);
-    stack.push(50);
-    stack.push(60); // This will show stack overflow since capacity is 5
-    cout << "Top element after pushing 40, 50, and 60: " << stack.peek() << endl;
-    cout << "Popped element is: " << stack.pop() << endl;
-    cout << "Top element after popping: " << stack.peek() << endl;
+int main() {
+    Stack s;
+    s.push(20);
+    s.push(10);
+    cout<<s.pop()<<endl;
+    cout<<s.topp()<<endl;
+    cout<<s.sizee()<<endl;
+    cout<<s.peek()<<endl; // Should return 20
     return 0;
 }
