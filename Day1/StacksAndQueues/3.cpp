@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-// Implementation of sack using queue
+// Implementation of stack using queue
 class Stack{
     queue<int>q1;
     public:
